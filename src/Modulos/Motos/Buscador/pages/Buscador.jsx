@@ -20,7 +20,7 @@ const Buscador = () => {
   ];
 
   const pruebaConexionBack = async() => {
-    const urlBase = import.meta.VITE_API_URL_BACK
+    const urlBase = import.meta.env.VITE_API_URL_BACK
     try {
         const respuesta = await fetch(urlBase)
         if(!respuesta.ok){
