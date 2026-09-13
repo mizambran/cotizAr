@@ -67,6 +67,9 @@ const Buscador = () => {
           </ButtonGroup>
         </Col>
       </Row>
+      <div>
+        <Button type='button' onClick={pruebaConexionBack} >Probar conexión</Button>
+      </div>
 
       {/* Renderizado Condicional según la Vista Activa */}
       {vistaActiva === 'tabla' ? (
