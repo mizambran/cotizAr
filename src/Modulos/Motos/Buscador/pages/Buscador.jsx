@@ -23,7 +23,7 @@ const Buscador = () => {
   const pruebaConexionBack = async() => {
     const urlBase = import.meta.env.VITE_API_URL_BACK
     try {
-        const respuesta = await fetch(urlBase)
+        const respuesta = await fetch(`${urlBase}api/usuarios`)
         if(!respuesta.ok){
             throw new Error(`Algo salió mal en la petición, mira ${respuesta.status}`)
         }
