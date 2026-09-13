@@ -19,15 +19,17 @@ const Buscador = () => {
     { id: 3, marca: 'BMW', modelo: 'GS', version: 'R 1250 Adventure', precio: '$ 35.000.000' }
   ];
 
+  const [datosPrueba, setDatosPrueba] = useState([])
   const pruebaConexionBack = async() => {
-    const urlBase = import.meta.VITE_API_URL_BACK
+    const urlBase = import.meta.env.VITE_API_URL_BACK
     try {
-        const respuesta = await fetch(urlBase)
+        const respuesta = await fetch(`${urlBase}api/usuarios`)
         if(!respuesta.ok){
             throw new Error(`Algo salió mal en la petición, mira ${respuesta.status}`)
         }
         const datos = await respuesta.json()
         console.log(datos);
+        setDatosPrueba(datos)
     } catch (error) {
         console.error(error)
         return []
@@ -126,6 +128,17 @@ const Buscador = () => {
           ))}
         </Row>
       )}
+      <div>
+        {datosPrueba.map((dat) => {
+            <div key={dat._id}>
+                <ul>
+                    <li> {dat.nombre} </li>
+                    <li> {dat.edad} </li>
+                    <li> {dat.email} </li>
+                </ul>
+            </div>
+        })}
+      </div>
     </Container>
   );
 };
