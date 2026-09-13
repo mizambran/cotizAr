@@ -1,14 +1,16 @@
 import { useContext } from 'react';
-import { Navbar, Container, Nav, Button, NavLink } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Navbar, Container, Nav, Button } from 'react-bootstrap';
+import { Link, useNavigate, NavLink } from 'react-router-dom';
 import { UsuarioContexto } from '../Context/UsuarioContext';
 
 const NavBar = () => {
 
     const {logueado, setLogueado} = useContext(UsuarioContexto)
 
+    const navegacion = useNavigate()
     const salir = () => {
         setLogueado(false)
+        navegacion('/')
     }
 
   return (
@@ -21,22 +23,22 @@ const NavBar = () => {
         <Navbar.Collapse id="navbar-publico" className="justify-content-end">
           {logueado ? (
             <Nav className="gap-3">
-            <NavLink className='nav-link' to="/">
+            <NavLink className='nav-link' to={'/'} >
                 Inicio
             </NavLink>
-            <NavLink className='nav-link' to="" >
+            <NavLink className='nav-link' to={'/buscador'} >
                 Buscar
             </NavLink>
-            <NavLink className='nav-link' >
+            <NavLink className='nav-link' to={'/comparador'} >
                 Comparativa
             </NavLink>
-            <NavLink className='nav-link' >
+            <NavLink className='nav-link' to={'/presupuesto'} >
                 Presupuesto
             </NavLink>
-            <NavLink className='nav-link' >
+            <NavLink className='nav-link' to={'/favoritos'} >
                 Favoritos
             </NavLink>
-            <Button as={Link} to="/login" variant="danger" className="px-4">
+            <Button variant="danger" className="px-4" onClick={salir} >
               Salir
             </Button>
           </Nav>
