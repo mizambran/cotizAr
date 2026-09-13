@@ -10,7 +10,29 @@ const Buscador = () => {
     { id: 1, marca: 'Yamaha', modelo: 'FZ', version: '3.0 FI ABS', precio: '$ 3.500.000' },
     { id: 2, marca: 'Honda', modelo: 'Titan', version: 'CG 150', precio: '$ 2.800.000' },
     { id: 3, marca: 'BMW', modelo: 'GS', version: 'R 1250 Adventure', precio: '$ 35.000.000' },
+    { id: 3, marca: 'BMW', modelo: 'GS', version: 'R 1250 Adventure', precio: '$ 35.000.000' },
+    { id: 3, marca: 'BMW', modelo: 'GS', version: 'R 1250 Adventure', precio: '$ 35.000.000' },
+    { id: 3, marca: 'BMW', modelo: 'GS', version: 'R 1250 Adventure', precio: '$ 35.000.000' },
+    { id: 3, marca: 'BMW', modelo: 'GS', version: 'R 1250 Adventure', precio: '$ 35.000.000' },
+    { id: 3, marca: 'BMW', modelo: 'GS', version: 'R 1250 Adventure', precio: '$ 35.000.000' },
+    { id: 3, marca: 'BMW', modelo: 'GS', version: 'R 1250 Adventure', precio: '$ 35.000.000' },
+    { id: 3, marca: 'BMW', modelo: 'GS', version: 'R 1250 Adventure', precio: '$ 35.000.000' }
   ];
+
+  const pruebaConexionBack = async() => {
+    const urlBase = import.meta.VITE_API_URL_BACK
+    try {
+        const respuesta = await fetch(urlBase)
+        if(!respuesta.ok){
+            throw new Error(`Algo salió mal en la petición, mira ${respuesta.status}`)
+        }
+        const datos = await respuesta.json()
+        console.log(datos);
+    } catch (error) {
+        console.error(error)
+        return []
+    }
+  }
 
   return (
     <Container className="py-4">
@@ -48,7 +70,7 @@ const Buscador = () => {
 
       {/* Renderizado Condicional según la Vista Activa */}
       {vistaActiva === 'tabla' ? (
-        <div className="table-responsive shadow-sm rounded">
+        <div className="table-responsive shadow-sm rounded mb-5">
           <Table hover className="align-middle bg-white mb-0">
             <thead className="bg-light text-primary">
               <tr>
@@ -75,7 +97,7 @@ const Buscador = () => {
           </Table>
         </div>
       ) : (
-        <Row className="g-4">
+        <Row className="g-4 mb-5">
           {resultadosSimulados.map((moto) => (
             <Col xs={12} md={6} lg={4} key={moto.id}>
               <Card className="h-100 shadow-sm border-0 border-top border-4 border-info">

@@ -20,7 +20,6 @@ const Inicio = () => {
       <div>
           <Button variant='danger' onClick={cambiarModo} style={{position:'sticky'}} >Cambio Sesión</Button>
       </div>
-      <NavBar />
       {/* HEADER / HERO SECTION */}
       {!logueado && (
         <div className="hero-section text-center text-white py-5 mb-5" style={{ backgroundColor: '#1A5F7A' }}>
@@ -34,7 +33,7 @@ const Inicio = () => {
           
           {!logueado && (
             <div>
-              <Button as={Link} to="/registro" variant="info" size="lg" className="me-3 fw-bold text-white">
+              <Button as={Link} to="/registro" variant="primary" size="lg" className="me-3 fw-bold text-white">
                 Registrarse
               </Button>
               <Button as={Link} to="/login" variant="outline-light" size="lg">
@@ -60,7 +59,7 @@ const Inicio = () => {
                   <Card.Body className="text-center">
                     <Card.Title>Buscar Moto</Card.Title>
                     <Card.Text>Navegá por nuestro catálogo completo.</Card.Text>
-                    <Button variant="outline-info">Buscar</Button>
+                    <Button variant="outline-info" as={Link} to={'/buscador'} >Buscar</Button>
                   </Card.Body>
                 </Card>
               </Col>
@@ -69,7 +68,7 @@ const Inicio = () => {
                   <Card.Body className="text-center">
                     <Card.Title>Comparativa</Card.Title>
                     <Card.Text>Enfrentá precios de distintos modelos.</Card.Text>
-                    <Button variant="outline-danger">Comparar</Button>
+                    <Button variant="outline-danger" as={Link} to={'/comparador'} >Comparar</Button>
                   </Card.Body>
                 </Card>
               </Col>
@@ -151,26 +150,6 @@ const Inicio = () => {
               </Col>
             </Row>
 
-            {/* SECCIÓN 3: Filtro Rápido (Presupuesto) */}
-            <Row className="mb-5 justify-content-center">
-              <Col md={8}>
-                <Card className="shadow-sm border-info">
-                  <Card.Body className="p-4">
-                    <h4 className="text-center mb-4">¿Cuánto pensás invertir?</h4>
-                    <Form className="d-flex gap-3">
-                      <Form.Control type="number" placeholder="Ej: 2000000" />
-                      <Form.Select>
-                        <option>Marca Preferida (Opcional)</option>
-                        <option>Honda</option>
-                        <option>Yamaha</option>
-                      </Form.Select>
-                      <Button variant="info" className="text-white px-4">Buscar</Button>
-                    </Form>
-                  </Card.Body>
-                </Card>
-              </Col>
-            </Row>
-
             {/* SECCIÓN 4: Contacto */}
             <Row className="justify-content-center mb-5" id='contacto'>
               <Col md={6}>
@@ -196,7 +175,6 @@ const Inicio = () => {
           </>
         )}
       </Container>
-        <Footer />
     </div>
   );
 };
