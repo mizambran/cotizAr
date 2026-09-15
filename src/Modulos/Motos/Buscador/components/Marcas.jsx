@@ -10,7 +10,7 @@ import {
 import { traerMarcasPaginado } from "../services/buscador.services";
 
 
-const Marcas = ({onSeleccionar}) => {
+const Marcas = ({seleccionarMarca}) => {
   const [terminoBusqueda, setTerminoBusqueda] = useState("");
   const [marcas, setMarcas] = useState([]);
 
@@ -49,13 +49,13 @@ const Marcas = ({onSeleccionar}) => {
       </Row>
       {/* Renderizado Condicional según la Vista Activa */}
       <Row className="g-4 mb-5">
-        {marcasFiltradas?.map((m) => (
-          <Col xs={12} md={6} lg={4} key={m._id}>
+        {marcasFiltradas?.map((marca) => (
+          <Col xs={12} md={6} lg={4} key={marca._id}>
             <Card className="h-100 shadow-sm border-0 border-top border-4 border-info">
               <Card.Body>
                 <div className="d-flex justify-content-between align-items-start mb-2">
                   <Card.Subtitle className="text-muted">
-                    <img src="" alt="logo" />
+                    
                   </Card.Subtitle>
                   <Button
                     variant="link"
@@ -66,11 +66,11 @@ const Marcas = ({onSeleccionar}) => {
                   </Button>
                 </div>
                 <Card.Title className="fs-4 text-primary">
-                  {m.nombre}
+                  {marca.nombre}
                 </Card.Title>
                 <Card.Text className="text-muted small mb-4"></Card.Text>
                 <div className="d-flex justify-content-between align-items-end">
-                  <Button variant="primary" size="sm" onClick={() => onSeleccionar(m._id)} >
+                  <Button variant="primary" size="sm" onClick={() => seleccionarMarca(marca._id)} >
                     Ver modelos
                   </Button>
                 </div>
