@@ -67,3 +67,18 @@ export const traerValuacionesPorId = async(id) => {
         return []
     }
 }
+
+export const traerModelosYVersiones = async(id) => {
+    try {
+        const respuesta = await fetch(`${urlBase}api/tabla/${id}`)
+        if(!respuesta.ok){
+            throw new Error(`Algo salió mal en la petición, mira ${respuesta.status}`)
+        }
+        const datos = await respuesta.json()
+        console.log(datos);
+        return datos
+    } catch (error) {
+        console.error(error)
+        return []
+    }
+}

@@ -7,7 +7,7 @@ export const UsuarioProvider = ({children}) => {
     
     const [usuario, setUsuario] = useState([])
 
-    const [logueado, setLogueado] = useState(true)
+    const [logueado, setLogueado] = useState(false)
     
     return(
         <UsuarioContexto.Provider value={{

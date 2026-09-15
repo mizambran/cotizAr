@@ -18,7 +18,7 @@ const Inicio = () => {
   return (
     <div className="inicio-container">
       <div>
-          <Button variant='danger' onClick={cambiarModo} style={{position:'sticky'}} >Cambio Sesión</Button>
+          <Button variant={logueado ? "primary" : "danger"} onClick={cambiarModo} style={{position:'sticky'}} > {logueado ? ("Salir") : ("Entrar")} </Button>
       </div>
       {/* HEADER / HERO SECTION */}
       {!logueado && (
