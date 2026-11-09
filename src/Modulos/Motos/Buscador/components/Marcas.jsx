@@ -8,6 +8,7 @@ import {
   Card,
 } from "react-bootstrap";
 import { traerMarcasPaginado } from "../services/buscador.services";
+import { useNavigate } from "react-router-dom";
 
 
 const Marcas = ({seleccionarMarca}) => {
@@ -30,9 +31,17 @@ const Marcas = ({seleccionarMarca}) => {
         return m.nombre?.toLowerCase().includes(terminoBusqueda.toLowerCase())
     })
   
+    const navegacion = useNavigate()
+    const volverAtras = () => {
+      navegacion(-1)
+    }
 
   return (
     <Container className="py-4">
+      <Button variant="outline-secondary" className="mb-4" onClick={volverAtras}>
+        ← Volver a Inicio
+      </Button>
+      
       <h2 className="text-secondary mb-4">Buscador de Cotizaciones</h2>
 
       {/* Barra de Búsqueda y Controles de Vista */}
