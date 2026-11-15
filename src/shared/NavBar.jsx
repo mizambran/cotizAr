@@ -14,7 +14,7 @@ const NavBar = () => {
     }
 
   return (
-    <Navbar bg="white" expand="lg" className="shadow-sm py-3" style={{position:"sticky", top:0, zIndex:9999}} >
+    <Navbar bg="white" expand="lg" className="shadow-sm py-3" style={{position:"sticky", top:0, zIndex:1020}} >
       <Container>
         <Navbar.Brand as={Link} to="/" className="fw-bold fs-3 text-primary">
           CotizAr
@@ -32,7 +32,7 @@ const NavBar = () => {
             <NavLink className='nav-link' to={'/comparador'} >
                 Comparativa
             </NavLink>
-            <NavLink className='nav-link' to={'/presupuesto'} >
+            <NavLink className='nav-link' to={'/autos/presupuesto'} >
                 Presupuesto
             </NavLink>
             <NavLink className='nav-link' to={'/favoritos'} >

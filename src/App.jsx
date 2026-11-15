@@ -10,6 +10,7 @@ import Footer from './shared/Footer'
 import Error404 from './pages/Error404'
 import Comparador from './Modulos/Motos/Comparador/pages/Comparador'
 import BuscadorAuto from './Modulos/Autos/Buscador/pages/BuscadorAuto'
+import PresupuestoAuto from './Modulos/Autos/Presupuesto/pages/PresupuestoAuto'
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
       <Route path='/registro' element={<Register />} />
       <Route path='motos/buscador/' element={<BuscadorMoto />} /> 
       <Route path='autos/buscador/' element={<BuscadorAuto />} /> 
+      <Route path='autos/presupuesto/' element={<PresupuestoAuto />} /> 
       <Route path='/comparador' element={<Comparador />} />
       <Route path='*' element={<Error404 />} />
     </Routes>
