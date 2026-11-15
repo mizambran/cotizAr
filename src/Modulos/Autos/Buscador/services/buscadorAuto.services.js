@@ -30,10 +30,21 @@ export const traerModelosYVersiones = async(id) => {
         return datos
     } catch (error) {
         console.error("Ocurrió algo en el catch", error)
-        throw error
+        return []
     }
 }
 
-export const traerValuacionesPorId = async() => {
-
+export const traerValuacionesPorId = async(id) => {
+    try {
+        const respuesta = await fetch(`${URLBASE}api/autos/valuaciones/${id}`)
+        if(!respuesta.ok){
+            throw new Error(`Algo salió mal en la petición. ${respuesta.status}`)
+        }
+        const datos = await respuesta.json()
+        console.log(datos);
+        return datos        
+    } catch (error) {
+        console.error("Ocurrió algo en el catch", error)
+        return []
+    }
 }

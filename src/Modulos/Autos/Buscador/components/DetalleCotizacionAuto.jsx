@@ -1,7 +1,6 @@
-// Archivo: DetalleCotizacionAuto.jsx
 import { useEffect, useState } from "react";
 import { traerValuacionesPorId } from "../services/buscadorAuto.services";
-import { Modal, Card, Button, Row, Col, Spinner, Table } from "react-bootstrap";
+import { Modal, Button, Row, Col, Spinner, Table } from "react-bootstrap";
 
 const DetalleCotizacionAuto = ({ mostrarModal, cerrarModal, versionSeleccionada }) => {
   const [valuaciones, setValuaciones] = useState([]);
@@ -14,7 +13,8 @@ const DetalleCotizacionAuto = ({ mostrarModal, cerrarModal, versionSeleccionada 
         const datos = await traerValuacionesPorId(versionSeleccionada);
         
         const arrayValuaciones = Array.isArray(datos) ? datos : (datos.results || []);
-        const valuacionesOrdenadas = [...arrayValuaciones].sort((a, b) => b.year - a.year);
+        const valuacionesValidas = arrayValuaciones?.filter(v => v.price > 0)
+        const valuacionesOrdenadas = [...valuacionesValidas].sort((a, b) => b.year - a.year);
         
         setValuaciones(valuacionesOrdenadas);
         setCargando(false);
@@ -26,74 +26,89 @@ const DetalleCotizacionAuto = ({ mostrarModal, cerrarModal, versionSeleccionada 
   }, [mostrarModal, versionSeleccionada]);
 
   return (
-    <Modal show={mostrarModal} onHide={cerrarModal} size="lg" centered  >
-      <Modal.Header closeButton className="border-0 pb-0"></Modal.Header>
-      <Modal.Body className="pt-0 px-md-4 pb-4">
-        
+    <Modal 
+      show={mostrarModal} 
+      onHide={cerrarModal} 
+      size="md" 
+      centered 
+      scrollable 
+      style={{ zIndex: 1060 }}
+    >
+      <Modal.Header closeButton className="border-0 pb-1">
+        <Modal.Title className="w-100 text-center text-uppercase text-muted fs-5 fw-bold ps-4">
+          Cotización
+        </Modal.Title>
+      </Modal.Header>
+
+      <Modal.Body className="pt-1 px-3 px-md-4 text-center">
         {cargando ? (
           <div className="text-center py-5">
             <Spinner animation="border" variant="info" />
-            <p className="text-muted mt-3">Calculando cotización oficial...</p>
+            <p className="text-muted mt-3">Calculando cotización...</p>
           </div>
         ) : valuaciones.length === 0 ? (
-          <h4 className="text-center text-muted my-5">No se encontraron cotizaciones para esta versión.</h4>
+          <h5 className="text-center text-muted my-5">No se encontraron cotizaciones para esta versión.</h5>
         ) : (
-          <Card className="shadow-none border-0 w-100 mx-auto" style={{ maxWidth: "600px" }}>
-            <Card.Body className="p-2 p-md-4 text-center">
-              <h6 className="text-uppercase text-muted mb-4 fw-bold">Cotización Oficial</h6>
-              
-              {/* VALUACIÓN PRINCIPAL (El año más reciente del array) */}
-              <div className="bg-light p-4 rounded-3 mb-4 border border-info">
-                <span className="d-block text-muted mb-2">
-                  Valor de Referencia - Año {valuaciones[0].year}
-                </span>
-                <span className="display-4 fw-bold text-success">
-                   {(valuaciones[0].price * valuaciones[0].exchange_rate).toLocaleString('es-AR', { style:"currency", currency:"ARS" })}
-                </span>
-              </div>
+          <>
+            <p className="text-muted small mb-3">
+              Recordá que las cotizaciones son aproximadas, pueden variar según el estado del vehículo, km, etc.
+            </p>
 
-              {/* HISTÓRICO POR AÑO */}
-              <h6 className="text-secondary mb-3 text-start mt-4">Valuaciones por Año</h6>
-              <div className="table-responsive mb-4">
-                <Table size="sm" hover className="align-middle text-start border mb-0">
-                  <thead className="bg-light text-muted">
-                    <tr>
-                      <th className="py-2 px-3">Año de Fabricación</th>
-                      <th className="py-2 px-3 text-end">Valor de Mercado</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {valuaciones.map((val) => {
-                      const precioCalculado = val.price * val.exchange_rate;
-                      return (
-                        <tr key={val._id}>
-                          <td className="fw-medium px-3">{val.year}</td>
-                          <td className="text-end fw-bold text-secondary px-3">
-                             {precioCalculado.toLocaleString('es-AR', { style:"currency", currency:"ARS" })}
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </Table>
-              </div>
+            {/* VALUACIÓN PRINCIPAL (El año más reciente del array) */}
+            <div className="bg-light p-3 rounded-3 mb-3 border border-info">
+              <span className="d-block text-muted small mb-1">
+                Año más reciente {valuaciones[0].year}
+              </span>
+              <span className="fs-2 fw-bold text-success">
+                {(valuaciones[0].price * valuaciones[0].exchange_rate).toLocaleString('es-AR', { style: "currency", currency: "ARS" })}
+              </span>
+            </div>
 
-              <Row className="g-3 mt-2">
-                <Col xs={6}>
-                  <Button variant="outline-info" className="w-100 fw-bold">
-                    ⭐ Favorito
-                  </Button>
-                </Col>
-                <Col xs={6}>
-                  <Button variant="danger" className="w-100 fw-bold" onClick={cerrarModal}>
-                    Cerrar
-                  </Button>
-                </Col>
-              </Row>
-            </Card.Body>
-          </Card>
+            {/* HISTÓRICO POR AÑO */}
+            <div className="table-responsive border rounded">
+              <Table size="sm" hover className="align-middle text-start mb-0">
+                <thead className="bg-light text-muted sticky-top">
+                  <tr>
+                    <th className="py-2 px-3">Año</th>
+                    <th className="py-2 px-3 text-end">Valor de Mercado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {valuaciones.map((val) => {
+                    const precioCalculado = val.price * val.exchange_rate;
+                    return (
+                      <tr key={val._id}>
+                        <td className="fw-medium px-3">{val.year}</td>
+                        <td className="text-end fw-bold text-secondary px-3">
+                          {precioCalculado.toLocaleString('es-AR', { style: "currency", currency: "ARS" })}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </Table>
+            </div>
+          </>
         )}
       </Modal.Body>
+
+      {/* PIE FIJO SIEMPRE VISIBLE */}
+      {!cargando && valuaciones.length > 0 && (
+        <Modal.Footer className="border-0 pt-2 pb-3 px-3 px-md-4">
+          <Row className="g-2 w-100 m-0">
+            <Col xs={6} className="ps-0">
+              <Button variant="outline-info" className="w-100 fw-bold">
+                ⭐ Favorito
+              </Button>
+            </Col>
+            <Col xs={6} className="pe-0">
+              <Button variant="danger" className="w-100 fw-bold" onClick={cerrarModal}>
+                Cerrar
+              </Button>
+            </Col>
+          </Row>
+        </Modal.Footer>
+      )}
     </Modal>
   );
 };
