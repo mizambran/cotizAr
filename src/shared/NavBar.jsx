@@ -32,7 +32,7 @@ const NavBar = () => {
             <NavLink className='nav-link' to={'/comparador'} >
                 Comparativa
             </NavLink>
-            <NavLink className='nav-link' to={'/presupuesto'} >
+            <NavLink className='nav-link' to={'/autos/presupuesto'} >
                 Presupuesto
             </NavLink>
             <NavLink className='nav-link' to={'/favoritos'} >

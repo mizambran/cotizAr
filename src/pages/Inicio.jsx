@@ -114,7 +114,7 @@ const Inicio = () => {
                   <Card.Body className="text-center d-flex flex-column">
                     <Card.Title className="fw-bold">¿Qué compro con $?</Card.Title>
                     <Card.Text className="text-muted flex-grow-1">Ajustá tu presupuesto y mirá opciones.</Card.Text>
-                    <Button variant="outline-secondary" className="w-100">
+                    <Button variant="outline-secondary" className="w-100" as={Link} to={`/${categoria}/presupuesto`} >
                       Calcular
                     </Button>
                   </Card.Body>
