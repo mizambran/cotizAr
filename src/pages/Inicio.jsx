@@ -90,7 +90,7 @@ const Inicio = () => {
                     <Card.Title className="fw-bold">Buscar {categoria === 'motos' ? 'Moto' : 'Auto'}</Card.Title>
                     <Card.Text className="text-muted flex-grow-1">Navegá por nuestro catálogo completo.</Card.Text>
                     {/* El Link cambia dinámicamente según la categoría elegida */}
-                    <Button variant="info" className="text-white fw-bold w-100" as={Link} to={`/${categoria}/buscador`}>
+                    <Button variant="info" className="text-white fw-bold w-100" as={Link} to={`/${categoria}/buscador/`}>
                       Buscar
                     </Button>
                   </Card.Body>
@@ -102,7 +102,7 @@ const Inicio = () => {
                   <Card.Body className="text-center d-flex flex-column">
                     <Card.Title className="fw-bold">Comparativa</Card.Title>
                     <Card.Text className="text-muted flex-grow-1">Enfrentá precios de distintos modelos.</Card.Text>
-                    <Button variant="outline-danger" className="w-100" as={Link} to={`/${categoria}/comparador`}>
+                    <Button variant="outline-danger" className="w-100" as={Link} to={`/${categoria}/comparador/`}>
                       Comparar
                     </Button>
                   </Card.Body>
