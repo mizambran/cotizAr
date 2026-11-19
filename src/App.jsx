@@ -8,7 +8,7 @@ import BuscadorMoto from './Modulos/Motos/Buscador/pages/BuscadorMoto'
 import NavBar from './shared/NavBar'
 import Footer from './shared/Footer'
 import Error404 from './pages/Error404'
-import Comparador from './Modulos/Motos/Comparador/pages/Comparador'
+import ComparadorMoto from './Modulos/Motos/Comparador/pages/ComparadorMoto'
 import BuscadorAuto from './Modulos/Autos/Buscador/pages/BuscadorAuto'
 import PresupuestoAuto from './Modulos/Autos/Presupuesto/pages/PresupuestoAuto'
 import ComparadorAuto from './Modulos/Autos/Comparador/components/ComparadorAuto'
@@ -27,7 +27,7 @@ function App() {
       <Route path='motos/buscador/' element={<BuscadorMoto />} /> 
       <Route path='autos/buscador/' element={<BuscadorAuto />} /> 
       <Route path='autos/presupuesto/' element={<PresupuestoAuto />} /> 
-      <Route path='/comparador' element={<Comparador />} />
+      <Route path='motos/comparador/' element={<ComparadorMoto />} />
       <Route path='autos/comparador/' element={<ComparadorAuto />} />
       <Route path='*' element={<Error404 />} />
     </Routes>
