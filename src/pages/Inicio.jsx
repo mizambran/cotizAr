@@ -84,48 +84,48 @@ const Inicio = () => {
 
             {/* SECCIÓN 1: Tarjetas de Acción Dinámicas */}
             <Row className="mb-5 g-4 justify-content-center">
-              <Col md={5} lg={4}>
+              <Col md={5} lg={3}>
                 <Card className="h-100 shadow-sm border-0 border-bottom border-4 border-info">
                   <Card.Body className="text-center d-flex flex-column">
                     <Card.Title className="fw-bold">Buscar {categoria === 'motos' ? 'Moto' : 'Auto'}</Card.Title>
                     <Card.Text className="text-muted flex-grow-1">Navegá por nuestro catálogo completo.</Card.Text>
                     {/* El Link cambia dinámicamente según la categoría elegida */}
-                    <Button variant="info" className="text-white fw-bold w-100" as={Link} to={`/${categoria}/buscador`}>
+                    <Button variant="primary" className="text-white fw-bold w-100" as={Link} to={`/${categoria}/buscador/`}>
                       Buscar
                     </Button>
                   </Card.Body>
                 </Card>
               </Col>
               
-              <Col md={5} lg={4}>
+              <Col md={5} lg={3}>
                 <Card className="h-100 shadow-sm border-0 border-bottom border-4 border-danger">
                   <Card.Body className="text-center d-flex flex-column">
                     <Card.Title className="fw-bold">Comparativa</Card.Title>
                     <Card.Text className="text-muted flex-grow-1">Enfrentá precios de distintos modelos.</Card.Text>
-                    <Button variant="outline-danger" className="w-100" as={Link} to={`/${categoria}/comparador`}>
+                    <Button variant="outline-danger" className="w-100 fw-bold" as={Link} to={`/${categoria}/comparador/`}>
                       Comparar
                     </Button>
                   </Card.Body>
                 </Card>
               </Col>
               
-              <Col md={5} lg={4}>
-                <Card className="h-100 shadow-sm border-0 border-bottom border-4 border-secondary">
+              <Col md={5} lg={3}>
+                <Card className="h-100 shadow-sm border-0 border-bottom border-4 border-success">
                   <Card.Body className="text-center d-flex flex-column">
                     <Card.Title className="fw-bold">¿Qué compro con $?</Card.Title>
                     <Card.Text className="text-muted flex-grow-1">Ajustá tu presupuesto y mirá opciones.</Card.Text>
-                    <Button variant="outline-secondary" className="w-100" as={Link} to={`/${categoria}/presupuesto`} >
+                    <Button variant="outline-success" className="w-100 fw-bold" as={Link} to={`/${categoria}/presupuesto`} >
                       Calcular
                     </Button>
                   </Card.Body>
                 </Card>
               </Col>
               
-              <Col md={5} lg={4}>
-                <Card className="h-100 shadow-sm border-0 border-bottom border-4 border-warning">
+              <Col md={5} lg={3}>
+                <Card className="h-100 shadow-sm border-0 border-bottom border-4 border-warning" >
                   <Card.Body className="text-center d-flex flex-column">
                     <Card.Title className="fw-bold">Mis Favoritos</Card.Title>
-                    <Card.Text className="text-muted flex-grow-1">Tus cotizaciones guardadas.</Card.Text>
+                    <Card.Text className="text-muted flex-grow-1">Tus comparativas y cotizaciones guardadas.</Card.Text>
                     <Button variant="outline-warning" className="w-100 fw-bold">
                       Ver lista
                     </Button>
@@ -134,8 +134,9 @@ const Inicio = () => {
               </Col>
             </Row>
 
-            {/* SECCIÓN 2: Grilla de Marcas Dinámica */}
-            <h4 className="m-4 text-secondary text-center">Marcas Destacadas de {categoria === 'motos' ? 'Motos' : 'Autos'}</h4>
+            {/* SECCIÓN 2: Grilla de Marcas Dinámica - no suma al diseño por ahora */}
+            
+            {/* <h4 className="m-4 text-secondary text-center">Marcas Destacadas de {categoria === 'motos' ? 'Motos' : 'Autos'}</h4>
             <Row className="g-3 mb-5 justify-content-center">
               {(categoria === 'motos' 
                 ? ['Honda', 'Yamaha', 'Zanella', 'Motomel', 'Gilera', 'Corven'] 
@@ -149,7 +150,7 @@ const Inicio = () => {
                   </Card>
                 </Col>
               ))}
-            </Row>
+            </Row> */}
           </>
         ) : (
           /* ==========================================

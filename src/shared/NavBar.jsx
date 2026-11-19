@@ -23,10 +23,10 @@ const NavBar = () => {
         <Navbar.Collapse id="navbar-publico" className="justify-content-end">
           {logueado ? (
             <Nav className="gap-3">
-            <NavLink className='nav-link' to={'/'} >
-                Inicio
+            <NavLink className='nav-link text-center' to={'/'} >
+              Inicio
             </NavLink>
-            <NavLink className='nav-link' to={'/buscador'} >
+            {/* <NavLink className='nav-link' to={'/buscador'} >
                 Buscar
             </NavLink>
             <NavLink className='nav-link' to={'/comparador'} >
@@ -37,7 +37,7 @@ const NavBar = () => {
             </NavLink>
             <NavLink className='nav-link' to={'/favoritos'} >
                 Favoritos
-            </NavLink>
+            </NavLink> */}
             <Button variant="danger" className="px-4" onClick={salir} >
               Salir
             </Button>
