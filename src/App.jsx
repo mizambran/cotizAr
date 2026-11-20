@@ -12,6 +12,7 @@ import ComparadorMoto from './Modulos/Motos/Comparador/pages/ComparadorMoto'
 import BuscadorAuto from './Modulos/Autos/Buscador/pages/BuscadorAuto'
 import PresupuestoAuto from './Modulos/Autos/Presupuesto/pages/PresupuestoAuto'
 import ComparadorAuto from './Modulos/Autos/Comparador/components/ComparadorAuto'
+import PresupuestoMoto from './Modulos/Motos/Presupuesto/pages/PresupuestoMoto'
 
 
 function App() {
@@ -25,7 +26,8 @@ function App() {
       <Route path='/login' element={<Login />} /> 
       <Route path='/registro' element={<Register />} />
       <Route path='motos/buscador/' element={<BuscadorMoto />} /> 
-      <Route path='autos/buscador/' element={<BuscadorAuto />} /> 
+      <Route path='autos/buscador/' element={<BuscadorAuto />} />
+      <Route path='motos/presupuesto/' element={<PresupuestoMoto />} /> 
       <Route path='autos/presupuesto/' element={<PresupuestoAuto />} /> 
       <Route path='motos/comparador/' element={<ComparadorMoto />} />
       <Route path='autos/comparador/' element={<ComparadorAuto />} />
