@@ -13,6 +13,7 @@ import BuscadorAuto from './Modulos/Autos/Buscador/pages/BuscadorAuto'
 import PresupuestoAuto from './Modulos/Autos/Presupuesto/pages/PresupuestoAuto'
 import ComparadorAuto from './Modulos/Autos/Comparador/components/ComparadorAuto'
 import PresupuestoMoto from './Modulos/Motos/Presupuesto/pages/PresupuestoMoto'
+import Favoritos from './Modulos/Motos/Favoritos/pages/Favoritos'
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
       <Route path='autos/presupuesto/' element={<PresupuestoAuto />} /> 
       <Route path='motos/comparador/' element={<ComparadorMoto />} />
       <Route path='autos/comparador/' element={<ComparadorAuto />} />
+      <Route path='/favoritos' element={<Favoritos />} />
       <Route path='*' element={<Error404 />} />
     </Routes>
     <Footer />

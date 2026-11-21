@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { Container, Row, Col, Form, Button, Card, Badge, Alert, Spinner, Table } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FaPlus, FaTrash, FaTrophy, FaStar, FaChartLine } from "react-icons/fa";
 import {
   ResponsiveContainer,
@@ -18,12 +18,14 @@ import {
   traerModelosYVersionesAuto,
   obtenerComparativaAutos,
 } from "../services/comparadorAuto.services";
+import { guardarNuevoFavorito } from "../../../Motos/Favoritos/services/favoritos.services";
 
 // Paleta de 4 colores bien diferenciados para las líneas del gráfico y las tarjetas
 const COLORES_VEHICULOS = ["#0d6efd", "#dc3545", "#198754", "#fd7e14"];
 
 const ComparadorAuto = () => {
   const navigate = useNavigate();
+  const location = useLocation()
 
   // Estados para los selectores en cascada
   const [marcas, setMarcas] = useState([]);
@@ -41,10 +43,18 @@ const ComparadorAuto = () => {
   const [cargandoComparativa, setCargandoComparativa] = useState(false);
 
   // Cargar marcas al iniciar
+  // Cargar marcas al iniciar
   useEffect(() => {
-    traerMarcasAuto()
-      .then((data) => setMarcas(data.results || []))
-      .catch((err) => console.error(err));
+    const cargarMarcas = async () => {
+      try {
+        const datos = await traerMarcasAuto();
+        setMarcas(datos.results || []);
+      } catch (error) {
+        console.error("Error al cargar las marcas:", error);
+      }
+    };
+
+    cargarMarcas();
   }, []);
 
   // Cuando cambia la marca, cargamos sus modelos y versiones
@@ -146,23 +156,57 @@ const ComparadorAuto = () => {
     return Object.values(mapaPorAnio).sort((a, b) => a.year - b.year);
   }, [datosComparativa]);
 
-  // Placeholder listo para conectar con el endpoint de Favoritos más adelante
-  const handleGuardarFavorito = () => {
-    const payloadFavorito = {
-      categoria: "auto",
-      tipo: "comparativa",
-      titulo: `Comparativa: ${seleccionados.map((s) => s.etiqueta).join(" vs ")}`,
-      versiones_ids: seleccionados.map((s) => s.id),
-    };
 
-    console.log("Objeto listo para enviar a POST /api/favoritos:", payloadFavorito);
-    Swal.fire({
-      icon: "success",
-      title: "Comparativa lista para Favoritos",
-      text: "La estructura ya quedó armada en consola para conectarla al módulo de Favoritos.",
-      timer: 2500,
-      showConfirmButton: false,
-    });
+  // Precargar comparativa si el usuario viene desde la pantalla de Favoritos
+  useEffect(() => {
+    const idsPrecargados = location.state?.idsPrecargados;
+    if (idsPrecargados && idsPrecargados.length > 0) {
+      const precargarDesdeFavoritos = async () => {
+        setCargandoComparativa(true);
+        try {
+          const res = await obtenerComparativaAutos(idsPrecargados);
+          setDatosComparativa(res);
+          // Reconstruimos los chips con las etiquetas que devuelve el backend
+          if (res.vehiculos) {
+            const listaReconstruida = res.vehiculos.map((v) => ({
+              id: v.versionId,
+              etiqueta: v.etiquetaCompleta,
+            }));
+            setSeleccionados(listaReconstruida);
+          }
+        } catch (error) {
+          console.error("Error al precargar comparativa favorita:", error);
+        } finally {
+          setCargandoComparativa(false);
+        }
+      };
+      precargarDesdeFavoritos();
+    }
+  }, [location.state]);
+  
+  
+const handleGuardarFavorito = async () => {
+    try {
+      const payloadFavorito = {
+        categoria: "auto",
+        tipo: "comparativa",
+        titulo: `Comparativa: ${seleccionados.map((s) => s.etiqueta).join(" vs ")}`,
+        subtitulo: `${seleccionados.length} Autos comparados`,
+        versiones_ids: seleccionados.map((s) => s.id),
+      };
+
+      await guardarNuevoFavorito(payloadFavorito);
+
+      Swal.fire({
+        icon: "success",
+        title: "¡Guardado en Favoritos!",
+        text: "Podés volver a ver esta comparativa cuando quieras desde la sección Favoritos.",
+        timer: 2000,
+        showConfirmButton: false,
+      });
+    } catch (error) {
+      Swal.fire("Error", "No se pudo guardar la comparativa en favoritos.", "error");
+    }
   };
 
   return (
@@ -300,7 +344,7 @@ const ComparadorAuto = () => {
                 </h5>
                 <p className="mb-0 small">
                   Es el vehículo que <strong>mejor conserva su valor de reventa</strong> en esta comparativa, con una
-                  variación promedio anual de{" "}
+                  variación promedio anual de
                   <strong>{datosComparativa.sugerencia.devaluacionPromedioAnual}%</strong>.
                 </p>
               </div>

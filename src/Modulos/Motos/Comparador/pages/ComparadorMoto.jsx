@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
 import { Container, Row, Col, Form, Button, Card, Badge, Alert, Spinner, Table } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 import { FaPlus, FaTrash, FaTrophy, FaStar, FaChartLine } from "react-icons/fa";
 import {
   ResponsiveContainer,
@@ -18,6 +17,9 @@ import {
   traerModelosYVersionesMoto,
   obtenerComparativaMotos,
 } from "../services/comparadorMotos.services";
+import { guardarNuevoFavorito } from "../../Favoritos/services/favoritos.services";
+import { useNavigate, useLocation } from "react-router-dom";
+
 
 const COLORES_VEHICULOS = ["#0d6efd", "#dc3545", "#198754", "#fd7e14"];
 
@@ -151,23 +153,59 @@ const ComparadorMoto = () => {
   }, [datosComparativa]);
 
   // Estructura lista para conectar con el módulo de Favoritos
-  const handleGuardarFavorito = () => {
-    const payloadFavorito = {
-      categoria: "moto",
-      tipo: "comparativa",
-      titulo: `Comparativa: ${seleccionados.map((s) => s.etiqueta).join(" vs ")}`,
-      versiones_ids: seleccionados.map((s) => s.id),
-    };
 
-    console.log("Objeto listo para enviar a POST /api/favoritos:", payloadFavorito);
-    Swal.fire({
-      icon: "success",
-      title: "Comparativa lista para Favoritos",
-      text: "La estructura ya quedó armada en consola para conectarla al módulo de Favoritos.",
-      timer: 2500,
-      showConfirmButton: false,
-    });
-  };
+const location = useLocation();
+
+// Precargar comparativa si el usuario viene desde la pantalla de Favoritos
+  useEffect(() => {
+    const idsPrecargados = location.state?.idsPrecargados;
+    if (idsPrecargados && idsPrecargados.length > 0) {
+      const precargarDesdeFavoritos = async () => {
+        setCargandoComparativa(true);
+        try {
+          const res = await obtenerComparativaMotos(idsPrecargados);
+          setDatosComparativa(res);
+          // Reconstruimos los chips con las etiquetas que devuelve el backend
+          if (res.vehiculos) {
+            const listaReconstruida = res.vehiculos.map((v) => ({
+              id: v.versionId,
+              etiqueta: v.etiquetaCompleta,
+            }));
+            setSeleccionados(listaReconstruida);
+          }
+        } catch (error) {
+          console.error("Error al precargar comparativa favorita:", error);
+        } finally {
+          setCargandoComparativa(false);
+        }
+      };
+      precargarDesdeFavoritos();
+    }
+  }, [location.state]);
+
+const handleGuardarFavorito = async () => {
+    try {
+      const payloadFavorito = {
+        categoria: "moto",
+        tipo: "comparativa",
+        titulo: `Comparativa: ${seleccionados.map((s) => s.etiqueta).join(" vs ")}`,
+        subtitulo: `${seleccionados.length} motos comparadas`,
+        versiones_ids: seleccionados.map((s) => s.id),
+      };
+
+      await guardarNuevoFavorito(payloadFavorito);
+
+      Swal.fire({
+        icon: "success",
+        title: "¡Guardado en Favoritos!",
+        text: "Podés volver a ver esta comparativa cuando quieras desde la sección Favoritos.",
+        timer: 2000,
+        showConfirmButton: false,
+      });
+    } catch (error) {
+      Swal.fire("Error", "No se pudo guardar la comparativa en favoritos.", "error");
+    }
+  }; 
 
   return (
     <Container className="py-4">
