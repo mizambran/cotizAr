@@ -126,7 +126,7 @@ const Inicio = () => {
                   <Card.Body className="text-center d-flex flex-column">
                     <Card.Title className="fw-bold">Mis Favoritos</Card.Title>
                     <Card.Text className="text-muted flex-grow-1">Tus comparativas y cotizaciones guardadas.</Card.Text>
-                    <Button variant="outline-warning" className="w-100 fw-bold">
+                    <Button variant="outline-warning" className="w-100 fw-bold" as={Link} to={`/favoritos`}>
                       Ver lista
                     </Button>
                   </Card.Body>
