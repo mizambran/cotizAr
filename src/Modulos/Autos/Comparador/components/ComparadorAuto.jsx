@@ -218,12 +218,12 @@ const handleGuardarFavorito = async () => {
 
         {seleccionados.length >= 2 && (
           <Button variant="warning" className="fw-bold shadow-sm" onClick={handleGuardarFavorito}>
-            <FaStar className="me-1" /> Guardar Comparativa en Favoritos
+            <FaStar className="me-1" />Guardar en favoritos
           </Button>
         )}
       </div>
 
-      <h2 className="text-secondary mb-1">Comparador de Evolución y Devaluación</h2>
+      <h2 className="text-secondary mb-1">Comparador de devaluación</h2>
       <p className="text-muted mb-4">
         Seleccioná hasta <strong>4 vehículos</strong> para analizar cómo mantienen su valor a lo largo de los años.
       </p>
@@ -340,11 +340,11 @@ const handleGuardarFavorito = async () => {
               <FaTrophy size={36} className="text-warning flex-shrink-0" />
               <div>
                 <h5 className="alert-heading fw-bold mb-1">
-                  Sugerencia de Compra: {datosComparativa.sugerencia.etiquetaCompleta}
+                  Sugerencia: {datosComparativa.sugerencia.etiquetaCompleta}
                 </h5>
                 <p className="mb-0 small">
                   Es el vehículo que <strong>mejor conserva su valor de reventa</strong> en esta comparativa, con una
-                  variación promedio anual de
+                  variación promedio anual de 
                   <strong>{datosComparativa.sugerencia.devaluacionPromedioAnual}%</strong>.
                 </p>
               </div>
@@ -353,11 +353,11 @@ const handleGuardarFavorito = async () => {
 
           {/* GRÁFICO DE LÍNEAS (EVOLUCIÓN HISTÓRICA) */}
           <Card className="shadow-sm border-0 mb-4">
-            <Card.Body className="p-3 p-md-4">
-              <h5 className="text-secondary fw-bold mb-3 d-flex align-items-center">
-                <FaChartLine className="me-2 text-primary" /> Curva de Cotización por Año de Fabricación
-              </h5>
-              <div style={{ width: "100%", height: 350 }}>
+            <Card.Body className="p-1 p-md-4">
+              <h3 className="text-secondary fw-bold mb-3 d-flex justify-content-center align-items-center">
+                <FaChartLine className="me-2 text-primary" />Cotización por Año
+              </h3>
+              <div style={{ width: "90%", height: 450 }}>
                 <ResponsiveContainer>
                   <LineChart data={datosGraficoRecharts} margin={{ top: 10, right: 20, left: 20, bottom: 5 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#e9ecef" />
@@ -409,7 +409,7 @@ const handleGuardarFavorito = async () => {
                         <h6 className="fw-bold text-dark mb-1">{vehiculo.etiquetaCompleta}</h6>
                         {esElSugerido && (
                           <Badge bg="success" className="flex-shrink-0">
-                            Mejor Retención
+                            Mejor opción
                           </Badge>
                         )}
                       </div>
