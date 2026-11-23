@@ -24,7 +24,7 @@ const ModelosConVersAuto = ({ idMarca, volverAtras }) => {
   const filasFiltradas = [];
   modYVers.forEach((modelo) => {
     modelo.versiones?.forEach((version) => {
-      if (version.nombre?.toLowerCase().includes(terminoBusqueda.toLowerCase())) {
+      if (version.nombre?.toLowerCase().includes(terminoBusqueda.toLowerCase()) || modelo.nombre?.toLowerCase().includes(terminoBusqueda.toLocaleLowerCase())) {
         filasFiltradas.push({
           idModelo: modelo._id,
           nombreModelo: modelo.nombre,
@@ -90,7 +90,7 @@ const ModelosConVersAuto = ({ idMarca, volverAtras }) => {
                   <td className="text-muted px-4">{fila.nombreVersion}</td>
                   <td className="text-center px-4">
                     <Button
-                      variant="info"
+                      variant="primary"
                       size="sm"
                       className="text-white fw-bold px-3"
                       onClick={() => abrirModal(fila.idVersion)}

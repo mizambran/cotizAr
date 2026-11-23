@@ -2,7 +2,7 @@ const URLBASE = import.meta.env.VITE_API_URL_BACK || "http://localhost:3000/";
 
 export const traerMarcasAuto = async () => {
   try {
-    const respuesta = await fetch(`${URLBASE}api/autos/marcas/paginacion?page=1&limit=100`);
+    const respuesta = await fetch(`${URLBASE}api/autos/marcas/paginacion?page=1&limit=200`);
     if (!respuesta.ok) {
       throw new Error(`Algo salió mal en la petición, mira ${respuesta.status}`);
     }

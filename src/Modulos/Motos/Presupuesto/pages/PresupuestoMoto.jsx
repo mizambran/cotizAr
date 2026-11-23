@@ -134,8 +134,8 @@ const PresupuestoMoto = () => {
 
       <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
         <div>
-          <h2 className="text-secondary mb-1">¿Qué moto compro con mi presupuesto?</h2>
-          <p className="text-muted mb-0">Ingresá tu monto máximo disponible y filtrá las opciones.</p>
+          <h2 className="text-secondary mb-1">¿Qué moto compro con ...?</h2>
+          <p className="text-muted mb-0">Ingresá un monto para filtrar las opciones que se adapten a tu presupuesto.</p>
         </div>
         <Badge bg="info" className="fs-6 px-3 py-2 text-white">
           {totalRegistros.toLocaleString("es-AR")} opciones encontradas

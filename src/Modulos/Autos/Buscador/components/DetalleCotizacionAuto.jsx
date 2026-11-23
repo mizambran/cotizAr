@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { traerValuacionesPorId } from "../services/buscadorAuto.services";
 import { Modal, Button, Row, Col, Spinner, Table } from "react-bootstrap";
+import { FaStar } from "react-icons/fa";
+import { guardarNuevoFavorito } from "../../../Motos/Favoritos/services/favoritos.services";
+import Swal from "sweetalert2";
 
 const DetalleCotizacionAuto = ({ mostrarModal, cerrarModal, versionSeleccionada }) => {
   const [valuaciones, setValuaciones] = useState([]);
@@ -24,6 +27,47 @@ const DetalleCotizacionAuto = ({ mostrarModal, cerrarModal, versionSeleccionada 
       setValuaciones([]);
     }
   }, [mostrarModal, versionSeleccionada]);
+
+  // Para agregar en favoritos 
+    const handleAgregarFavorito = async () => {
+      try {
+        // Tomamos la valuación más reciente (la primera del array ordenado) para el subtítulo
+        const masReciente = valuaciones[0];
+        const precioFormateado = masReciente
+          ? Number(masReciente.precioFinal).toLocaleString("es-AR", {
+              style: "currency",
+              currency: "ARS",
+            })
+          : "";
+  
+        // Armamos el título con los datos que tengas disponibles en la modal
+        const tituloVehiculo =
+          masReciente?.marcaNombre && masReciente?.modeloNombre
+            ? `${masReciente.marcaNombre} ${masReciente.modeloNombre} ${masReciente.versionNombre || ""}`.trim()
+            : "Cotización guardada";
+  
+        const payloadFavorito = {
+          categoria: "moto", 
+          tipo: "cotizacion",
+          titulo: tituloVehiculo,
+          subtitulo: masReciente ? `Año ${masReciente.year} - ${precioFormateado}` : "",
+          versiones_ids: [versionSeleccionada],
+        };
+  
+        await guardarNuevoFavorito(payloadFavorito);
+  
+        Swal.fire({
+          icon: "success",
+          title: "¡Añadido a Favoritos!",
+          text: "Podés consultarlo cuando quieras desde la sección Favoritos.",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+        cerrarModal()
+      } catch (error) {
+        Swal.fire("Error", "No se pudo guardar la cotización en favoritos.", "error");
+      }
+    };
 
   return (
     <Modal 
@@ -97,8 +141,8 @@ const DetalleCotizacionAuto = ({ mostrarModal, cerrarModal, versionSeleccionada 
         <Modal.Footer className="border-0 pt-2 pb-3 px-3 px-md-4">
           <Row className="g-2 w-100 m-0">
             <Col xs={6} className="ps-0">
-              <Button variant="outline-info" className="w-100 fw-bold">
-                ⭐ Favorito
+              <Button variant="warning" className="w-100 fw-bold" onClick={handleAgregarFavorito}>
+                <FaStar /> Añadir a favoritos
               </Button>
             </Col>
             <Col xs={6} className="pe-0">
