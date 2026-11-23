@@ -90,7 +90,7 @@ const ModelosConVers = ({ idMarca, volverAtras }) => {
                   <td className="text-muted px-4">{fila.nombreVersion}</td>
                   <td className="text-center px-4">
                     <Button
-                      variant="info"
+                      variant="primary"
                       size="sm"
                       className="text-white fw-bold px-3"
                       onClick={() => abrirModal(fila.idVersion)}
